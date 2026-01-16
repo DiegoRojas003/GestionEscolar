@@ -1,0 +1,34 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: gestion_escolar
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./backend/sql/datos_prueba.sql:/docker-entrypoint-initdb.d/datos_prueba.sql
+
+  backend:
+    build: ./backend
+    container_name: spring-api
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URI=jdbc:mysql://db:3306/gestion_escolar
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_DRIVER=com.mysql.cj.jdbc.Driver
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: react-app
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    depends_on:
+      - backend
