@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Alumnos from './pages/alumnos';
-import Materias from './pages/Materias';
+import Materias from './pages/materias';
 import Notas from './pages/notas';
 
 export default function App() {
@@ -16,9 +16,6 @@ export default function App() {
   <h1 className="text-4xl font-extrabold tracking-tight text-slate-800 mb-2">
     Academy<span className="text-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Flow</span>
   </h1>
-  <p className="text-slate-500 font-medium text-sm">
-    Exitos perro que yo se que le va a ir bien ponga el titulo acá el archivo se encuentra en src/app.jsx
-  </p>
 </header>
       <div className="max-w-6xl mx-auto">
        

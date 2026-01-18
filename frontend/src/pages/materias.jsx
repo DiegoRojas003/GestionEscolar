@@ -6,7 +6,7 @@ const Materias = () => {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const URL = 'https://jsonplaceholder.typicode.com/posts?_limit=10';
+ const API_URL = 'http://localhost:8080/alumnos';
 
   // 1. (GET)
   const cargarMaterias = async () => {

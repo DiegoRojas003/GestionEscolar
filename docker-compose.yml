@@ -1,17 +1,23 @@
 services:
   db:
     image: mysql:8.0
-    container_name: mysql-db
     environment:
-      MYSQL_DATABASE: gestion_escolar
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3306:3306"
+      - MYSQL_DATABASE=gestion_escolar
+      - MYSQL_ROOT_PASSWORD=root
     volumes:
       - ./backend/sql/datos_prueba.sql:/docker-entrypoint-initdb.d/datos_prueba.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   backend:
     build: ./backend
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
     container_name: spring-api
     ports:
       - "8080:8080"
@@ -20,8 +26,6 @@ services:
       - DB_USER=root
       - DB_PASSWORD=root
       - DB_DRIVER=com.mysql.cj.jdbc.Driver
-    depends_on:
-      - db
 
   frontend:
     build: ./frontend
